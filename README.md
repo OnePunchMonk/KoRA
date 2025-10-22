@@ -66,25 +66,26 @@ The architecture is a **simple but powerful** extension of LoRA.
 
 For input **x**, standard LoRA adapters compute deltas for Query, Key, and Value:
 
-\[
-\delta_q, \delta_k, \delta_v
-\]
+<p align="center">
+  <img src="https://latex.codecogs.com/png.latex?\delta_q,\;\delta_k,\;\delta_v" alt="KoRA deltas"/>
+</p>
+
 
 ### Step 2. Compose the Signals
 
 Instead of applying them directly, concatenate and pass through the **CompositionBlock** (an MLP):
 
-\[
-\delta_{comp} = \text{CompositionBlock}([\delta_q ; \delta_k ; \delta_v])
-\]
+<p align="center">
+  <img src="https://latex.codecogs.com/png.latex?\delta_{comp}=\text{CompositionBlock}([\delta_q;\delta_k;\delta_v])" alt="Equation for KoRA Composition"/>
+</p>
 
 ### Step 3. Apply a Holistic Update
 
 This single composed delta is then applied to the model using a **learnable gate** \( g \):
 
-\[
-v_{new} = v_{orig} + g \cdot \delta_{comp}
-\]
+<p align="center">
+  <img src="https://latex.codecogs.com/png.latex?v_{new}=v_{orig}+g\cdot\delta_{comp}" alt="KoRA update equation"/>
+</p>
 
 > The **gate \( g \)** starts at zero, ensuring optimization stability and allowing the model to gradually “turn up the volume” on the compositional signal.
 
@@ -174,10 +175,10 @@ Fine-tuned for 5 epochs on CIFAR-100.
 
 | Tuning Method | Params Tuned (%) | CKA Sim. | Accuracy (%) | F1 Score |
 |:--|:--:|:--:|:--:|:--:|
-| **LoRA (r=8)** | 1.45 | 0.73 | 92.48 | 0.924 |
+| **LoRA (r=8)** | **1.45** | 0.73 | **92.48** | **0.924** |
 | **Adapter Fusion** | 1.45 | 0.71 | 92.22 | 0.922 |
 | **KoRA (d_comp=4)** | 1.80 | 0.76 | 83.96 | 0.840 |
-| **KoRA (d_comp=8)** | 2.18 | 0.76 | 84.19 | 0.842 |
+| **KoRA (d_comp=8)** | 2.18 | **0.76** | 84.19 | 0.842 |
 
 > 🧠 **Analysis:**  
 > LoRA dominates on single-task performance.  
@@ -194,7 +195,7 @@ Models pre-trained on CIFAR-100, fine-tuned for one epoch on **1% of Tiny ImageN
 | **LoRA (r=8)** | 71.04 | 0.8307 |
 | **Adapter Fusion** | 46.67 | 0.6364 |
 | **KoRA (d_comp=4)** | 97.37 | 0.9867 |
-| **KoRA (d_comp=8)** | 98.24 | 0.9911 |
+| **KoRA (d_comp=8)** | **98.24** | **0.9911** |
 
 > 🚀 **Analysis:**  
 > KoRA’s compositional approach achieves **near-perfect transfer** — dramatically outperforming LoRA.  
@@ -215,13 +216,13 @@ Preliminary **CKA (Centered Kernel Alignment)** shows that KoRA learns **more st
 ---
 
 ### 4.4 Dense Prediction (NYU Depth V2)
+Models pre-trained on CIFAR-100, fine-tuned for one epoch on **1% of NYU Depth V2** (monocular depth estimation).
 
-Evaluated on **1% of NYU Depth V2** (monocular depth estimation).
 
 | Method | Metric | Score |
 |:--|:--|:--:|
-| **LoRA** | RMSE | 0.2800 |
-|  | AbsRel | 0.5629 |
+| **LoRA** | RMSE | **0.2800** |
+|  | AbsRel | **0.5629** |
 | **KoRA** | RMSE | 0.3327 |
 |  | AbsRel | 0.6271 |
 
