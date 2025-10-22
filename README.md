@@ -1,5 +1,10 @@
 # 🧠 KoRA: Kolmogorov-inspired Compositional Adapters for Robust Fine-Tuning
 
+[![Status](https://img.shields.io/badge/Status-In%20Progress-yellow)]()
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![PEFT](https://img.shields.io/badge/Category-PEFT-orange)]()
+[![Inspired By](https://img.shields.io/badge/Theory-Kolmogorov–Arnold-green)]()
+
 **KoRA** is a novel **Parameter-Efficient Fine-Tuning (PEFT)** strategy that introduces **inter-adapter communication** to learn **robust, generalizable representations** that transfer across domains — addressing a key limitation in methods like **LoRA**.
 
 ---
@@ -200,8 +205,6 @@ Evaluated on **1% of NYU Depth V2** (monocular depth estimation).
 
 ```bash
 git clone https://github.com/onepunchmonk/kora.git
-cd kora
-pip install -r requirements.txt
 ```
 
 ---
