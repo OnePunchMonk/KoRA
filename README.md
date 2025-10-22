@@ -129,15 +129,11 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-%% ==========================================
-%% Panel A: LoRA (baseline)
-%% ==========================================
 subgraph LORA["a) Low-Rank Adaptation (LoRA)"]
   direction TB
   IN_L["Input Embeddings (tokens x d)"] --> ORIG_L["Original Weights (Linear Layer)"]
   ORIG_L --> OUT_L["Output Embeddings (tokens x d)"]
 
-  %% LoRA module
   IN_L --> A_LoRA["Down Projection: A [r x d]"]
   A_LoRA --> B_LoRA["Up Projection: B [d x r]"]
   B_LoRA --> DELTA_L["Delta (tokens x d)"]
@@ -146,21 +142,14 @@ subgraph LORA["a) Low-Rank Adaptation (LoRA)"]
   ADD_L --> OUT_L
 end
 
-%% ==========================================
-%% Panel B: KoRA (this work)
-%% ==========================================
 subgraph KORA["b) KoRA (this work)"]
   direction TB
   IN_K["Input Embeddings (tokens x d)"] --> BACKBONE["ViT Backbone (Frozen)"]
   BACKBONE --> OUT_K["Backbone Outputs (tokens x d)"]
-
-  %% captured inputs
   BACKBONE -.-> CAPTURE["Captured Inputs (via forward hooks)"]
 
   CAPTURE --> ADAPTERS["Adapter Banks {Ai, Bi} (low-rank)"]
   ADAPTERS --> PROJ["Adapter Projections (compose to r–d representations)"]
-
-  %% composition modules
   PROJ --> PSI["Psi (Ψ): Couplings"]
   PROJ --> PHI["Phi (Φ): Composers"]
 
@@ -172,12 +161,7 @@ subgraph KORA["b) KoRA (this work)"]
   ADD_K --> OUT_K
 end
 
-%% ==========================================
-%% Visual spacing between panels
-%% ==========================================
 LORA --- KORA
-yaml
-Copy code
 ```
 
 ---
