@@ -56,6 +56,10 @@ Inspired by the **Kolmogorov–Arnold Representation Theorem** (which states tha
 
 This **CompositionBlock** creates **functional dependency** between adapters, forcing them to learn a **shared, compositional representation** of the task.
 
+![Figure1](Fig-1.png)
+![Figure2](Fig-2.png)
+![Figure3](Fig-3.png)
+
 ---
 
 ## 🔧 Architecture: How It Works
