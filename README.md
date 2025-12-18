@@ -56,9 +56,9 @@ Inspired by the **Kolmogorov–Arnold Representation Theorem** (which states tha
 
 This **CompositionBlock** creates **functional dependency** between adapters, forcing them to learn a **shared, compositional representation** of the task.
 
-![Figure1](Fig-1.png)
-![Figure2](Fig-2.png)
-![Figure3](Fig-3.png)
+![Figure1](img\Fig-1.png)
+![Figure2](img\Fig-2.png)
+![Figure3](img\Fig-3.png)
 
 ---
 
@@ -211,7 +211,7 @@ Models pre-trained on CIFAR-100, fine-tuned for one epoch on **1% of Tiny ImageN
 
 Preliminary **CKA (Centered Kernel Alignment)** shows that KoRA learns **more structured, cross-layer dependencies**.
 
-![CKA Representation Similarity](Figure.png)
+![CKA Representation Similarity](img\Figure.png)
 
 > **Figure 2:**  
 > CKA similarity matrices for KoRA (left) and LoRA (right) between blocks 0, 6, and 11.  
