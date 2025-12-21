@@ -1,7 +1,6 @@
 # 🧠 KoRA: Kolmogorov-inspired Compositional Adapters for Robust Fine-Tuning
 
 [![Status](https://img.shields.io/badge/Status-In%20Progress-yellow)]()
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![PEFT](https://img.shields.io/badge/Category-PEFT-orange)]()
 [![Inspired By](https://img.shields.io/badge/Theory-Kolmogorov–Arnold-green)]()
 
