@@ -1,5 +1,5 @@
 """Mathematically explicit experimental KoRA adapters."""
 
-from .multiplicative import MultiplicativeKoRA
+from .multiplicative import MultiplicativeKoRA, SharedBilinearKoRA
 
-__all__ = ["MultiplicativeKoRA"]
+__all__ = ["MultiplicativeKoRA", "SharedBilinearKoRA"]
