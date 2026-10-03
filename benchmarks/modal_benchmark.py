@@ -32,6 +32,7 @@ image = (
 @dataclass
 class Result:
     domain: str
+    method: str
     model: str
     parameters: int
     batch: int
@@ -101,11 +102,28 @@ def benchmark(domain: str = "llm", model_id: str = "", smoke: bool = False) -> d
     else:
         raise ValueError(f"unknown domain: {domain}")
 
-    adapter = SharedBilinearKoRA(in_features, out_features, rank=min(16, in_features), interaction_rank=2).to(device)
     x = torch.randn(1, tokens, in_features, device=device)
-    mean_ms, p95_ms = _timed(lambda: adapter(x))
-    result = Result(domain, model_name, adapter.trainable_parameters, 1, tokens, mean_ms, p95_ms, device)
-    return asdict(result)
+    rank = min(16, in_features)
+    kora = SharedBilinearKoRA(in_features, out_features, rank=rank, interaction_rank=2).to(device)
+
+    class LoRA(nn.Module):
+        def __init__(self):
+            super().__init__()
+            self.a = nn.Parameter(torch.empty(rank, in_features))
+            self.b = nn.Parameter(torch.zeros(out_features, rank))
+            nn.init.kaiming_uniform_(self.a, a=5 ** 0.5)
+        def forward(self, x):
+            return (x @ self.a.t()) @ self.b.t()
+
+    lora = LoRA().to(device)
+    results = []
+    for method, module, params in (
+        ("lora", lora, sum(p.numel() for p in lora.parameters())),
+        ("shared_bilinear_kora", kora, kora.trainable_parameters),
+    ):
+        mean_ms, p95_ms = _timed(lambda: module(x))
+        results.append(asdict(Result(domain, method, model_name, params, 1, tokens, mean_ms, p95_ms, device)))
+    return results
 
 
 @app.local_entrypoint()
