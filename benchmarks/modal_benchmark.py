@@ -84,7 +84,7 @@ def benchmark(domain: str = "llm", model_id: str = "", smoke: bool = False) -> d
         model_name = model_id
     elif domain == "vlm":
         from transformers import CLIPVisionModel
-        model_id = model_id or "hf-internal-testing/tiny-random-CLIPVisionModelWithProjection"
+        model_id = model_id or "openai/clip-vit-base-patch32"
         projection = CLIPVisionModel.from_pretrained(model_id).to(device)
         in_features = projection.config.hidden_size
         out_features = in_features
